@@ -1,12 +1,15 @@
-import CharacterListItem from "@/components/CharacterListItem";
-import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
-import { Character, Location } from "@/types";
-import { useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
+import { useLocalSearchParams } from "expo-router";
+import { Character, Location } from "@/types";
+import { ThemedText } from "@/components/ThemedText";
+import { ThemedView } from "@/components/ThemedView";
+import CharacterListItem from "@/components/CharacterListItem";
+import { extractArrayURLIds } from "@/lib/utils";
+import * as API from '@/lib/api';
 
-export default function LocationPage({route}: {route: any}) {
+
+export default function LocationPage() {
     const { id, name } = useLocalSearchParams<{id: string, name: string}>();
     const [data, setData] = useState<Location>();
     const [residents, setResidents] = useState<Character[] | null>(null);
@@ -14,25 +17,24 @@ export default function LocationPage({route}: {route: any}) {
     const [isLoadingResidents, setIsLoadingResidents] = useState<boolean>(true);
 
     const getResidents = async (residentsUrls:string[]) => {
-        setIsLoadingResidents(true);
-        let residentsId:string[] = [];
-        residentsUrls.forEach(async (url) => {
-            let id = url.split('/').pop();
-            if(id) residentsId.push(id);
-        });
-        const response = await fetch(`https://rickandmortyapi.com/api/character/${residentsId.join(',')}`);
-        const json = await response.json();
-        setResidents(json);
-        setIsLoadingResidents(false);
+        try {
+            setIsLoadingResidents(true);
+            let residentsIds:string[] = extractArrayURLIds(residentsUrls);
+            const response = await API.getCharacters(residentsIds);
+            setResidents(response);
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setIsLoadingResidents(false);
+        }
     }
 
     const getLocationDetails = async () => {
         try {
             setIsLoading(true);
-            const response = await fetch(`https://rickandmortyapi.com/api/location/${id}`);
-            const json = await response.json();
-            setData(json);
-            getResidents(json.residents);
+            const location = await API.getLocation(id);
+            setData(location);
+            getResidents(location.residents);
         } catch (error) {
             console.error(error);
         } finally {

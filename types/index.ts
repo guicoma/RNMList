@@ -17,6 +17,15 @@ export type Character = {
     url: string,
     created: string,
 };
+export type PagedCharacter = {
+    info: {
+        count: number,
+        pages: number,
+        next: string | null,
+        prev: string | null
+    },
+    results : Character[]
+}
 
 
 export type Episode = {
@@ -41,5 +50,4 @@ export type Location = {
 
 export type LocationParams = {
     id: string,
-    name: string,
 };

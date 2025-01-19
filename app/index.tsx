@@ -1,30 +1,32 @@
+import { useEffect, useState } from "react";
+import { ActivityIndicator, FlatList, Platform, StyleSheet, useWindowDimensions } from "react-native";
+
+import * as API from "@/lib/api";
+import { Character } from "@/types";
+
 import CharacterCard from "@/components/CharacterCard";
 import { ThemedView } from "@/components/ThemedView";
-import { Character } from "@/types";
-import { useEffect, useState } from "react";
-import { ActivityIndicator, FlatList, Platform, SafeAreaView, StyleSheet, useWindowDimensions, View } from "react-native";
 
 export default function ListScreen(){
     const [data, setData] = useState<Character[]>([]);
     const [pageLoaded, setPageLoaded] = useState(1);
+    const [isEndPage, setIsEndPage] = useState<boolean>(false);
     const [isLoading, setLoading] = useState(true);
     const {width} = useWindowDimensions();
 
     const getRNMCharactersFromApi = async () => {
-        setLoading(true);
-        //Just for the illusion of loading
-        setTimeout(async() => {
-            try {
-                const response = await fetch(`https://rickandmortyapi.com/api/character/?page=${pageLoaded}`);
-                const json = await response.json()
-                setPageLoaded(prevPage => prevPage + 1);
-                setData(prevData => prevData.concat(json.results));
-            } catch (error) {
-                console.error(error);
-            } finally {
-                setLoading(false);
-            }
-        }, 1000);
+        if(isEndPage) return;
+        try {
+            setLoading(true);
+            const response = await API.getPagedCharacters(pageLoaded);
+            setIsEndPage(response.info.next === null);
+            setPageLoaded(prevPage => prevPage + 1);
+            setData(prevData => prevData.concat(response.results));
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setLoading(false);
+        }
     };
 
 
@@ -33,7 +35,6 @@ export default function ListScreen(){
     }, []);
 
     return (
-        
         <ThemedView style={styles.container}>
             {data.length > 0 &&
                 <FlatList
@@ -43,6 +44,7 @@ export default function ListScreen(){
                     renderItem={({item}) => <CharacterCard character={item} />}
                     keyExtractor={(item,index) => `character-${index}-${item.id}`}
                     onEndReached={getRNMCharactersFromApi}
+                    onEndReachedThreshold={0.5}
                     style={styles.list}
                 />
             }

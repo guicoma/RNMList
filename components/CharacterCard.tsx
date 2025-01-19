@@ -7,6 +7,7 @@ import { useNavigation } from "expo-router";
 
 export default function CharacterCard({character}: {character: Character}) {
     const navigation = useNavigation<any>();
+
     const goToCharacterDetails = () => {
         const params = { id: character.id, name: character.name };
         navigation.navigate('details', params);
@@ -24,7 +25,8 @@ export default function CharacterCard({character}: {character: Character}) {
                 <ThemedText style={styles.subtitle}>{character.origin.name}</ThemedText>
             </View>
             <Image source={{uri: character.image}}
-                   style={styles.cardImage} />
+                   style={styles.cardImage}
+            />
         </TouchableOpacity >
     )
 }

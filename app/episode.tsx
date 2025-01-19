@@ -1,52 +1,74 @@
+import { useEffect, useState } from "react";
+import { ActivityIndicator, SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
+import { useLocalSearchParams, useNavigation } from "expo-router";
+
+import * as API from '@/lib/api';
+import { extractArrayURLIds } from "@/lib/utils";
+
+import { Character, Episode } from "@/types";
+
 import CharacterListItem from "@/components/CharacterListItem";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-import { Character, Episode } from "@/types";
-import { useLocalSearchParams } from "expo-router";
-import { useEffect, useState } from "react";
-import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 
 export default function EpisodePage() {
     const {id} = useLocalSearchParams<{id: string}>();
     const [episode, setEpisode] = useState<Episode>();
     const [characters, setCharacters] = useState<Character[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [isLoadingCharacters, setIsLoadingCharacters] = useState<boolean>(true);
+    const navigation = useNavigation()
 
     const getEpisodeInfo = async () => {
         try {
-            const response = await fetch(`https://rickandmortyapi.com/api/episode/${id}`);
-            const json = await response.json();
-            setEpisode(json);
-            let characterIds = json.characters.map((url:string) => url.split('/').pop());
+            setIsLoading(true);
+            const response = await API.getEpisode(id);
+            setEpisode(response);
+            let characterIds = extractArrayURLIds(response.characters);
             getCharacters(characterIds);
         } catch (error) {
             console.error(error);
+        } finally {
+            setIsLoading(false);
         }
     }
 
     const getCharacters = async (charaterIds:string[]) => {
-        const response = await fetch(`https://rickandmortyapi.com/api/character/${charaterIds.join(',')}`);
-        const json = await response.json();
-        setCharacters(json);
+        try {
+            setIsLoadingCharacters(true);
+            const response = await API.getCharacters(charaterIds);
+            setCharacters(response);
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setIsLoadingCharacters(false);
+        }
     }
 
     useEffect(() => {
         getEpisodeInfo();
+        navigation.setOptions({ headerTitle: `Episode ${id}` })
     }, []);
 
     return (
         <SafeAreaView style={styles.container}>
             <ThemedView style={styles.container}>
                 <ScrollView>
-                    <View style={styles.details}>
-                        <ThemedText type="title">{episode?.name}</ThemedText>
-                        <ThemedText type="subtitle">{episode?.episode}</ThemedText>
-                        <ThemedText>Aired: {episode?.air_date}</ThemedText>
-                        <ThemedText>Characters:</ThemedText>
-                        <View>
-                            {characters? characters.map((character, index) => (<CharacterListItem key={index} character={character} />))
-                            :null}
-                        </View>
-                    </View>
+                        {
+                            isLoading? <ActivityIndicator size='large' />
+                            : <View style={styles.details}>
+                                <ThemedText type="title">{episode?.name}</ThemedText>
+                                <ThemedText type="subtitle">{episode?.episode}</ThemedText>
+                                <ThemedText>Aired: {episode?.air_date}</ThemedText>
+                                <ThemedText>Characters:</ThemedText>
+                                <View>
+                                    {
+                                        isLoadingCharacters? <ActivityIndicator size='small' />
+                                        : characters.map((character, index) => (<CharacterListItem key={index} character={character} />))
+                                    }
+                                </View>
+                            </View>
+                        }
                 </ScrollView>
             </ThemedView>
         </SafeAreaView>
