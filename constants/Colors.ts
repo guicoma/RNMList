@@ -14,14 +14,19 @@ export const Colors = {
     icon: '#687076',
     tabIconDefault: '#687076',
     tabIconSelected: tintColorLight,
+    badge : {
+      Alive: '#08C952',
+      Dead: '#E50914',
+      unknown: 'grey',
+    },
     card : {
         background: '#F5F5F5',
     },
-    badge : {
-        Alive: '#08C952',
-        Dead: '#E50914',
-        unknown: 'grey',
+    details: {
+      background: '#F5F5F5',
+      border: '#cbcbcb'
     }
+    
   },
   dark: {
     text: '#ECEDEE',
@@ -30,13 +35,17 @@ export const Colors = {
     icon: '#9BA1A6',
     tabIconDefault: '#9BA1A6',
     tabIconSelected: tintColorDark,
+    badge : {
+      Alive: '#08C952',
+      Dead: '#E50914',
+      unknown: 'grey',
+    },
     card : {
       background: '#004925',
     },
-    badge : {
-        Alive: '#08C952',
-        Dead: '#E50914',
-        unknown: 'grey',
+    details: {
+      background: '#111111',
+      border: '#252525'
     }
   },
 };

@@ -2,7 +2,11 @@
 
 A React Native project showcasing the list of characters that appear on the popular TV show "Rick and Morty".
 
-This project is based on the Expo framework.
+This project is based on the Expo framework. Utilizing the [The Rick and Morty API](https://rickandmortyapi.com/)
+
+
+## Demo
+Lastest build is hosted at [https://rnmlist.expo.app](https://rnmlist.expo.app)
 
 ## Getting started
 Once you have downloaded the repo. Enter the directory and install all dependencies.

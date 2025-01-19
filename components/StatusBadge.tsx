@@ -1,35 +1,27 @@
 import { CharacterStatus } from "@/types";
-import { StyleSheet, useColorScheme, View } from "react-native";
-import { ThemedText } from "./ThemedText";
+import { StyleSheet, Text, useColorScheme, View } from "react-native";
 import { Colors } from "@/constants/Colors";
 
 export default function StatusBadge({status}: {status: CharacterStatus}) {
-    const statusColor = useColorScheme() === 'light' ? Colors.light.badge : Colors.dark.badge;
-    
+    const theme = useColorScheme() ?? 'light';
+    const statusColor = Colors[theme].badge;
+
     return (
-        <View style={styles.badge}>
-            <ThemedText style={styles.badgeText}>({status})</ThemedText>
-            <View style={[styles.dot, {backgroundColor: statusColor[status]}]} />
+        <View style={[styles.badge,{backgroundColor: statusColor[status]}]}>
+            <Text style={styles.text}>{status}</Text>
         </View>
     )
-
 }
 
 const styles = StyleSheet.create({
     badge: {
-        alignSelf: 'flex-start',
-        alignItems  : 'center',
+        alignItems  : 'baseline',
         flexDirection: 'row',
+        borderRadius: 6,
+        paddingVertical: 2,
+        paddingHorizontal: 6,
     },
-    dot: {
-        width: 8,
-        height: 8,
-        borderRadius: 20,
-        marginHorizontal: 4,
-    },
-    badgeText: {
-        color: 'white',
-        textTransform: 'lowercase',
-        fontSize: 12,
-    },
+    text: {
+        color: 'white'
+    }
 })
