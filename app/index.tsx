@@ -2,7 +2,7 @@ import CharacterCard from "@/components/CharacterCard";
 import { ThemedView } from "@/components/ThemedView";
 import { Character } from "@/types";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, FlatList, Platform, StyleSheet, useWindowDimensions } from "react-native";
+import { ActivityIndicator, FlatList, Platform, SafeAreaView, StyleSheet, useWindowDimensions, View } from "react-native";
 
 export default function ListScreen(){
     const [data, setData] = useState<Character[]>([]);
@@ -33,16 +33,19 @@ export default function ListScreen(){
     }, []);
 
     return (
+        
         <ThemedView style={styles.container}>
-            <FlatList
-                data={data}
-                key={Platform.OS === 'web' ? Math.floor(width/300) : 1}
-                numColumns={Platform.OS === 'web' ? Math.floor(width/300) : 1}
-                renderItem={({item}) => <CharacterCard character={item} />}
-                keyExtractor={(item,index) => `character-${item.id}`}
-                onEndReached={getRNMCharactersFromApi}
-                style={{paddingTop: 16}}
-            ></FlatList>
+            {data.length > 0 &&
+                <FlatList
+                    data={data}
+                    key={Platform.OS === 'web' ? Math.floor(width/300) : 1}
+                    numColumns={Platform.OS === 'web' ? Math.floor(width/300) : 1}
+                    renderItem={({item}) => <CharacterCard character={item} />}
+                    keyExtractor={(item,index) => `character-${index}-${item.id}`}
+                    onEndReached={getRNMCharactersFromApi}
+                    style={styles.list}
+                />
+            }
             <ActivityIndicator size="large" animating={isLoading} />
         </ThemedView>
     );
@@ -51,7 +54,11 @@ export default function ListScreen(){
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingHorizontal: 16,
+        padding: 16,
         justifyContent: 'center',
+    },
+    list: {
+        paddingHorizontal: 8,
+        paddingVertical: 16,
     }
 });

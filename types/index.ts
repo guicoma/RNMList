@@ -1,3 +1,8 @@
+export type CharacterStatus = 'Alive' | 'Dead' | 'unknown';
+export type CharacterLocation = {
+    name: string,
+    url: string
+}
 export type Character = {
     id: number,
     name: string,
@@ -5,27 +10,36 @@ export type Character = {
     species: string,
     type: string,
     gender: string,
-    origin: {
-        name: string,
-        url: string
-    },
-    location: {
-        name: string,
-        url: string
-    },
+    origin: CharacterLocation,
+    location: CharacterLocation,
     image: string,
     episode: string[],
     url: string,
     created: string,
 };
 
-export type CharacterStatus = 'Alive' | 'Dead' | 'unknown';
+
 export type Episode = {
     id:	number,
-    name:	string,
-    air_date:	string,
-    episode:	string,
+    name: string,
+    air_date: string,
+    episode: string,
     characters:	string[],
-    url:	string,
-    created:	string,
+    url: string,
+    created: string,
+};
+
+export type Location = {
+    id:	number,
+    name: string,
+    type: string,
+    dimension: string,
+    residents: string[],
+    url: string,
+    created: string,
+};
+
+export type LocationParams = {
+    id: string,
+    name: string,
 };

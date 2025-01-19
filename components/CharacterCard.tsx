@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 8,
         flexDirection: 'column',
         justifyContent: 'flex-end',
+        boxShadow: '0 5px 5px rgba(0,0,0,0.5)',
     },
     cardHeader: {
         flexDirection: 'row',
@@ -48,6 +49,8 @@ const styles = StyleSheet.create({
     titleContainer: {
         padding: 8,
         backgroundColor: 'rgba(0,0,0,0.5)',
+        borderBottomLeftRadius: 8,
+        borderBottomRightRadius: 8,
         zIndex: 2,
     },
     cardImage: {

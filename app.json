@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "rick-and-morty-character-listing",
-    "slug": "rick-and-morty-character-listing",
+    "slug": "rnmlist",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -36,6 +36,15 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "88020f63-381b-4604-8223-0e507102ad22"
+      }
+    },
+    "owner": "gcoma"
   }
 }
