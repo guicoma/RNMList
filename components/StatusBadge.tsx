@@ -1,13 +1,12 @@
 import { CharacterStatus } from "@/types";
-import { StyleSheet, Text, useColorScheme, View } from "react-native";
-import { Colors } from "@/constants/Colors";
+import { StyleSheet, Text, View } from "react-native";
+import { useThemeColor } from "@/hooks/useThemeColor";
 
 export default function StatusBadge({status}: {status: CharacterStatus}) {
-    const theme = useColorScheme() ?? 'light';
-    const statusColor = Colors[theme].badge;
+    const color = useThemeColor({}, `statusBadge${status}`);
 
     return (
-        <View style={[styles.badge,{backgroundColor: statusColor[status]}]}>
+        <View style={[styles.badge,{backgroundColor: color}]}>
             <Text style={styles.text}>{status}</Text>
         </View>
     )

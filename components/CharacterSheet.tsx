@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Image, StyleSheet, useColorScheme, View } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 import { useNavigation } from "expo-router";
 
 import { extractArrayURLIds, extractURLId, isEmpty } from "@/lib/utils";
@@ -7,20 +7,18 @@ import { Character } from "@/types";
 
 import { ThemedText } from "./ThemedText";
 import StatusBadge from "./StatusBadge";
-import { Colors } from "@/constants/Colors";
+import { useThemeColor } from "@/hooks/useThemeColor";
 
 interface CharacterSheetProps {
     character: Character;
 }
 
-
 export default function CharacterSheet({ character }: CharacterSheetProps) {
     const navigation = useNavigation<any>();
     const [episodesIds, setEpisodesIds] = useState<string[]>([]);
 
-    const theme = useColorScheme() || 'light';
-    const backgroundColor = Colors[theme].details.background;
-    const borderBottomColor = Colors[theme].details.border;
+    const backgroundColor = useThemeColor({}, 'detailsBackground');
+    const borderBottomColor = useThemeColor({}, 'detailsBorder');
 
     const goToOriginDetails = () => {
         const id = extractURLId(character.origin.url);
@@ -67,14 +65,14 @@ export default function CharacterSheet({ character }: CharacterSheetProps) {
                         }
                     </View>
                     <View style={{...styles.item, borderBottomColor}}>
-                            <ThemedText style={styles.label}>Last seen</ThemedText>
-                            {
-                                isEmpty(character.location.url)? <ThemedText>{character.location.name}</ThemedText>
-                                :   <ThemedText type="link" 
-                                                onPress={goToLocationDetails}>
-                                        {character.location.name}
-                                    </ThemedText>
-                            }
+                        <ThemedText style={styles.label}>Last seen</ThemedText>
+                        {
+                            isEmpty(character.location.url)? <ThemedText>{character.location.name}</ThemedText>
+                            :   <ThemedText type="link" 
+                                            onPress={goToLocationDetails}>
+                                    {character.location.name}
+                                </ThemedText>
+                        }
                     </View>
                     <View style={styles.itemLast}>
                         <ThemedText style={styles.label}>Appears in</ThemedText>

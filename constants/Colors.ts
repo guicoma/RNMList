@@ -14,18 +14,12 @@ export const Colors = {
     icon: '#687076',
     tabIconDefault: '#687076',
     tabIconSelected: tintColorLight,
-    badge : {
-      Alive: '#08C952',
-      Dead: '#E50914',
-      unknown: 'grey',
-    },
-    card : {
-        background: '#F5F5F5',
-    },
-    details: {
-      background: '#F5F5F5',
-      border: '#cbcbcb'
-    }
+    statusBadgeAlive: '#08C952',
+    statusBadgeDead: '#E50914',
+    statusBadgeunknown: 'grey',
+    cardBackground: '#f5f5f5',
+    detailsBackground: '#f5f5f5',
+    detailsBorder: '#cbcbcb',
     
   },
   dark: {
@@ -35,17 +29,11 @@ export const Colors = {
     icon: '#9BA1A6',
     tabIconDefault: '#9BA1A6',
     tabIconSelected: tintColorDark,
-    badge : {
-      Alive: '#08C952',
-      Dead: '#E50914',
-      unknown: 'grey',
-    },
-    card : {
-      background: '#004925',
-    },
-    details: {
-      background: '#111111',
-      border: '#252525'
-    }
+    statusBadgeAlive: '#08C952',
+    statusBadgeDead: '#E50914',
+    statusBadgeunknown: 'grey',
+    cardBackground: '#004925',
+    detailsBackground: '#111111',
+    detailsBorder: '#252525',
   },
 };
