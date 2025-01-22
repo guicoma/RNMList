@@ -7,19 +7,20 @@ import { ThemedView } from "@/components/ThemedView";
 import CharacterListItem from "@/components/CharacterListItem";
 import { extractArrayURLIds } from "@/lib/utils";
 import * as API from '@/lib/api';
+import NotFoundScreen from "./+not-found";
 
 
 export default function LocationPage() {
-    const { id, name } = useLocalSearchParams<{id: string, name: string}>();
+    const {id, name} = useLocalSearchParams<{id: string, name: string}>();
     const [data, setData] = useState<Location>();
     const [residents, setResidents] = useState<Character[] | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [isLoadingResidents, setIsLoadingResidents] = useState<boolean>(true);
 
-    const getResidents = async (residentsUrls:string[]) => {
+    const getResidents = async(residentsUrls: string[]) => {
         try {
             setIsLoadingResidents(true);
-            let residentsIds:string[] = extractArrayURLIds(residentsUrls);
+            let residentsIds: string[] = extractArrayURLIds(residentsUrls);
             const response = await API.getCharacters(residentsIds);
             setResidents(response);
         } catch (error) {
@@ -52,7 +53,8 @@ export default function LocationPage() {
                 <ScrollView style={styles.details}>
                 {
                     isLoading? <ActivityIndicator size='large' />
-                    :data? <View>
+                    : (data == null)? <NotFoundScreen />
+                    : <View>
                             <ThemedText type="title" style={styles.title}>{data.name}</ThemedText>
                             <ThemedText>Type: {data.type}</ThemedText>
                             <ThemedText>Dimension: {data.dimension}</ThemedText>
@@ -64,10 +66,9 @@ export default function LocationPage() {
                                 : <ThemedText>No residents found</ThemedText>
                             }
                         </View>
-                    : <ThemedText>No info found</ThemedText>
                 }
                 </ScrollView>
-            </ThemedView>
+            </ThemedView> 
         </SafeAreaView>
     );
 }

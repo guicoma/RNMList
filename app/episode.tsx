@@ -10,6 +10,7 @@ import { Character, Episode } from "@/types";
 import CharacterListItem from "@/components/CharacterListItem";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
+import NotFoundScreen from "./+not-found";
 
 export default function EpisodePage() {
     const {id} = useLocalSearchParams<{id: string}>();
@@ -56,6 +57,7 @@ export default function EpisodePage() {
                 <ScrollView>
                         {
                             isLoading? <ActivityIndicator size='large' />
+                            : (episode == null)? <NotFoundScreen />
                             : <View style={styles.details}>
                                 <ThemedText type="title">{episode?.name}</ThemedText>
                                 <ThemedText type="subtitle">{episode?.episode}</ThemedText>
