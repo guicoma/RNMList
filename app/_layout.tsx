@@ -31,11 +31,12 @@ export default function RootLayout() {
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
-        <Stack.Screen name="index"  options={{ title: "Rick and Morty Characters" }} />
+        <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
+        {/* <Stack.Screen name="index"  options={{ title: "Rick and Morty Characters" }} />
         <Stack.Screen name="details" options={{ headerBackTitle: "Back" }} />
         <Stack.Screen name="location" options={{ title: "Location" }} />
-        <Stack.Screen name="episode" options={{ title: "Episode" }} />
-        <Stack.Screen name="+not-found" />
+        <Stack.Screen name="episode" options={{ title: "Episode" }} /> */}
+        {/* <Stack.Screen name="+not-found" /> */}
       </Stack>
       <StatusBar style="auto" />
     </ThemeProvider>

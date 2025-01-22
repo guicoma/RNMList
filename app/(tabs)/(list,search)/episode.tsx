@@ -10,7 +10,7 @@ import { Character, Episode } from "@/types";
 import CharacterListItem from "@/components/CharacterListItem";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-import NotFoundScreen from "./+not-found";
+import NotFoundScreen from "../../+not-found";
 
 export default function EpisodePage() {
     const {id} = useLocalSearchParams<{id: string}>();

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ActivityIndicator, FlatList, Platform, StyleSheet, useWindowDimensions } from "react-native";
+import { ActivityIndicator, FlatList, Platform, SafeAreaView, StyleSheet, useWindowDimensions } from "react-native";
 
 import * as API from "@/lib/api";
 import { Character } from "@/types";
@@ -7,7 +7,7 @@ import { Character } from "@/types";
 import CharacterCard from "@/components/CharacterCard";
 import { ThemedView } from "@/components/ThemedView";
 
-export default function ListScreen(){
+export default function ListTab(){
     const [data, setData] = useState<Character[]>([]);
     const [pageLoaded, setPageLoaded] = useState(1);
     const [isEndPage, setIsEndPage] = useState<boolean>(false);
@@ -35,20 +35,22 @@ export default function ListScreen(){
     }, []);
 
     return (
-        <ThemedView style={styles.container}>
-            {data.length > 0 &&
-                <FlatList
-                    data={data}
-                    key={Platform.OS === 'web' ? Math.floor(width/300) : 1}
-                    numColumns={Platform.OS === 'web' ? Math.floor(width/300) : 1}
-                    renderItem={({item}) => <CharacterCard character={item} />}
-                    keyExtractor={(item,index) => `character-${index}-${item.id}`}
-                    onEndReached={getRNMCharactersFromApi}
-                    onEndReachedThreshold={0.5}
-                    style={styles.list}
-                />
-            }
-            <ActivityIndicator size="large" animating={isLoading} />
+        <ThemedView style={{flex: 1}}>
+            <SafeAreaView style={styles.container}>
+                {data.length > 0 &&
+                    <FlatList
+                        data={data}
+                        key={Platform.OS === 'web' ? Math.floor(width/300) : 1}
+                        numColumns={Platform.OS === 'web' ? Math.floor(width/300) : 1}
+                        renderItem={({item}) => <CharacterCard character={item} />}
+                        keyExtractor={(item,index) => `character-${index}-${item.id}`}
+                        onEndReached={getRNMCharactersFromApi}
+                        onEndReachedThreshold={0.5}
+                        style={styles.list}
+                    />
+                }
+                <ActivityIndicator size="large" animating={isLoading} />
+            </SafeAreaView>
         </ThemedView>
     );
 }

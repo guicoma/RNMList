@@ -20,7 +20,7 @@ export const Colors = {
     cardBackground: '#f5f5f5',
     detailsBackground: '#f5f5f5',
     detailsBorder: '#cbcbcb',
-    
+    inputBorder: '#dcdcdc',
   },
   dark: {
     text: '#ECEDEE',
@@ -35,5 +35,6 @@ export const Colors = {
     cardBackground: '#004925',
     detailsBackground: '#111111',
     detailsBorder: '#252525',
+    inputBorder: '#7e7e7e',
   },
 };

@@ -7,7 +7,7 @@ import { ThemedView } from "@/components/ThemedView";
 import CharacterListItem from "@/components/CharacterListItem";
 import { extractArrayURLIds } from "@/lib/utils";
 import * as API from '@/lib/api';
-import NotFoundScreen from "./+not-found";
+import NotFoundScreen from "../../+not-found";
 
 
 export default function LocationPage() {

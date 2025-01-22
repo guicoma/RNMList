@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { ActivityIndicator, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { useLocalSearchParams, useNavigation } from "expo-router";
-import NotFoundScreen from "./+not-found";
+import NotFoundScreen from "../../+not-found";
 import * as API from "@/lib/api";
-import { extractURLId } from "@/lib/utils";
 import { ThemedView } from "@/components/ThemedView";
 import { Character } from "@/types";
 import CharacterSheet from "@/components/CharacterSheet";
