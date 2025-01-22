@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<View
+  style={
+    {
+      "alignItems": "center",
+      "flex": 1,
+      "flexDirection": "row",
+      "marginHorizontal": 8,
+    }
+  }
+>
+  <Image
+    source={
+      {
+        "uri": "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
+      }
+    }
+    style={
+      {
+        "borderRadius": 25,
+        "height": 16,
+        "marginHorizontal": 4,
+        "width": 16,
+      }
+    }
+  />
+  <Text
+    style={
+      [
+        {
+          "color": "#11181C",
+        },
+        {
+          "fontSize": 16,
+          "lineHeight": 24,
+        },
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+      ]
+    }
+  >
+    Rick Sanchez
+  </Text>
+</View>
+`;

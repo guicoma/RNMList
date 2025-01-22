@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<View
+  style={
+    [
+      {
+        "alignItems": "baseline",
+        "borderRadius": 6,
+        "flexDirection": "row",
+        "paddingHorizontal": 6,
+        "paddingVertical": 2,
+      },
+      {
+        "backgroundColor": "#08C952",
+      },
+    ]
+  }
+>
+  <Text
+    style={
+      {
+        "color": "white",
+      }
+    }
+  >
+    Alive
+  </Text>
+</View>
+`;
